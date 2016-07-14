@@ -26,6 +26,13 @@ Implementation details
 <p>A sbt project was created in IntelliJ. The source code of the sbt project can be found under /src/sbt_project <br/>
 The main scala program can be found under /src/sbt_project/src/main/scala/media_degree.scala <br/></p>
 
+Java version used: 
+
+        java version "1.7.0_79"
+        Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
+
+<p>Scala version: 2.11.8</p>
+
 <p>A jar file was generated and placed under /src/. Name of the jar file is: insight_2016_intellij_2.11-1.0.jar </p>
 
 <br/>

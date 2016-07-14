@@ -1,4 +1,4 @@
-[0m[[0minfo[0m] [0mRunning media_degree ../../venmo_input/venmo-trans.txt ../../venmo_output/output.txt[0m
+[0m[[0minfo[0m] [0mRunning media_degree [0m
 [0m[[0mdebug[0m] [0mWaiting for threads to exit or System.exit to be called.[0m
 [0m[[0mdebug[0m] [0m  Classpath:[0m
 [0m[[0mdebug[0m] [0m	/Users/Giovanna/insight_giovanna/src/sbt_project/target/scala-2.11/classes[0m
