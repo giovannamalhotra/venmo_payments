@@ -35,7 +35,7 @@ Java version used:
 
 <p>A jar file was generated and placed under /src/. Name of the jar file is: insight_2016_intellij_2.11-1.0.jar </p>
 <br/>
-        ><i>Note: Due to time constraint and the submission deadline, improvements to this code will be implemented here: https://github.com/giovannamalhotra/venmo\_payments\_v2.</i>
+        ><i>Note: Due to time constraint and the submission deadline, improvements to this code will be implemented here: https://github.com/giovannamalhotra/venmo_payments_v2.</i>
 
 <br/>
 <br/>
