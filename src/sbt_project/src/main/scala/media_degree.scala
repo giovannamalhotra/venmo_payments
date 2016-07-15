@@ -22,8 +22,9 @@ import org.json4s.JsonAST.JValue
   *   a. Determine new max time stamp
   *   b. Add new transaction to array of last transactions
   *   c. Loop through all transactions and only consider the ones that are within the 60-seconds window (from latest time stamp)
-  *   d. If transaction is within the 60 second-window, then copy it to temporary array and update number of connections for the actor and target
-  *   e. Copy HasMap (containing number of connections for each individual) to Array, sort and calculate new median degree
+  *   d. If transaction is within the 60 second-window, then copy it to a new array of transactions.
+  *      Also update graph adjacency list (vertexMap) with the connections for the actor and target
+  *   e. Copy vertexMap (containing the connections for each user) to an array, sort and calculate new median degree
   *   f. Write new median degree to output file
   */
 
@@ -95,8 +96,9 @@ object media_degree {
     /** Add transaction object to array of transactions  */
     transactionsArr += o
 
-    /** create an empty map to keep track of connections for each vertex (actor or target) */
-    var vertexMap = scala.collection.mutable.Map[String, Int]()
+    /** create an empty map - adjacency list - to keep track of connections for each vertex (actor or target) */
+    //var vertexMap = scala.collection.mutable.Map[String, Int]()
+    var vertexMap = scala.collection.mutable.Map[String,  ArrayBuffer[String]]()
 
     /** Loop through last transactions, only consider the ones that are within the 60-seconds window */
     var transTempArr = ArrayBuffer[transaction]()
@@ -110,20 +112,33 @@ object media_degree {
         transTempArr += a
         //println("Transaction will be copied")
 
-        /** Increment connections for the transaction actor */
-        if ( vertexMap.contains(a.actor) ) { /** If Vertex already exists in the HashMap, then increment its connections */
-          vertexMap(a.actor) += 1
+        /** Increment connections for the actor */
+        if ( vertexMap.contains(a.actor) ) { /** If user already exists in the Adjacency List (HashMap), then increment its connections */
+          //vertexMap(a.actor) += 1
+          //vertexMap(a.actor) += a.target
+
+          if (!vertexMap(a.actor).contains(a.target)) {
+            vertexMap(a.actor) += a.target
+          }
         }
         else {
-          vertexMap += (a.actor -> 1)
+          //vertexMap += (a.actor -> 1)
+          vertexMap += (a.actor -> ArrayBuffer(a.target) )
         }
 
-        /** Increment connections for the transaction target */
-        if ( vertexMap.contains(a.target) ) { /** If Vertex already exists in the HashMap, then increment its connections */
-          vertexMap(a.target) += 1
+        /** Increment connections for the target */
+        if ( vertexMap.contains(a.target) ) { /** If user already exists in the Adjacency List (HashMap), then increment its connections */
+          //vertexMap(a.target) += 1
+          //vertexMap(a.target) += a.actor
+
+          if (!vertexMap(a.target).contains(a.actor)) {
+            vertexMap(a.target) += a.actor
+          }
+
         }
         else {
-          vertexMap += (a.target -> 1)
+          //vertexMap += (a.target -> 1)
+          vertexMap += (a.target -> ArrayBuffer(a.actor) )
         }
       }
     }
@@ -132,7 +147,8 @@ object media_degree {
     /** Copy HasMap (containing number of connections for each individual) to Array, sort and calculate new median degree */
     var medianArray = ArrayBuffer[Int]()
     for ((k,v) <- vertexMap) {
-      medianArray += v
+      //medianArray += v
+      medianArray += v.length
     }
     medianArray = medianArray.sorted
     //var medianValStr = median(medianArray).toString
